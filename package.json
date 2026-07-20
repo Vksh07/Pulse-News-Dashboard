@@ -1,6 +1,6 @@
 {
   "name": "@Vksh07/pulse-news-dashboard",
-  "version": "2.0.5",
+  "version": "2.0.7",
   "description": "ADHD-Savvy News Dashboard — one-command news reader with UPSC prep, gamification, and ADHD-friendly modes",
   "type": "module",
   "bin": {
@@ -95,6 +95,15 @@
   "author": "Venkat",
   "license": "MIT",
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
-  }
+    "registry": "https://npm.pkg.github.com/",
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Vksh07/Pulse-News-Dashboard.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Vksh07/Pulse-News-Dashboard/issues"
+  },
+  "homepage": "https://github.com/Vksh07/Pulse-News-Dashboard#readme"
 }
