@@ -49,39 +49,37 @@ Pulse is not your typical news reader. It was built from the ground up for neuro
 - Node.js 18+ (for frontend development)
 - [SearXNG](https://docs.searxng.org/) instance (default: `http://localhost:8080`)
 
-### One-command (npx)
-```bash
-npx @Vksh07/pulse-news-dashboard --registry=https://npm.pkg.github.com
-# → http://localhost:18925
-```
-
-No install required. npx downloads, checks for Python 3.10+, installs `feedparser` if needed, ensures the frontend is built, and starts the server — all in one command.
-
-### Install globally
-```bash
-npm install -g @Vksh07/pulse-news-dashboard --registry=https://npm.pkg.github.com
-pulse-news-dashboard
-# → http://localhost:18925
-```
-
-Or add to `~/.npmrc` for shorter commands:
-```
-@Vksh07:registry=https://npm.pkg.github.com/
-```
-Then:
-```bash
-npx @Vksh07/pulse-news-dashboard
-# or globally:
-npm install -g @Vksh07/pulse-news-dashboard && pulse-news-dashboard
-```
-
-### From source (no npm registry needed)
+### From source (recommended)
 ```bash
 git clone https://github.com/Vksh07/Pulse-News-Dashboard.git
 cd Pulse-News-Dashboard
 npm install && npm run build
 npm start
 # → http://localhost:18925
+```
+
+That's it. The CLI (`cli.js`) auto-detects Python 3.10+, installs `feedparser` if needed, and starts the server.
+
+### Docker (coming soon)
+```bash
+docker build -t pulse-dashboard .
+docker run -p 18925:18925 pulse-dashboard
+```
+
+### Development
+```bash
+npm install && npm run dev
+# Frontend hot-reload on :18926, proxies /api to :18925
+```
+
+### npm package (GitHub Packages)
+```bash
+# Configure GitHub Packages auth (requires GitHub PAT with read:packages scope)
+echo "@Vksh07:registry=https://npm.pkg.github.com/" >> ~/.npmrc
+echo "//npm.pkg.github.com/:_authToken=YOUR_GITHUB_TOKEN" >> ~/.npmrc
+
+# Then run
+npx @Vksh07/pulse-news-dashboard
 ```
 
 ### From source
