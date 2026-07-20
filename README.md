@@ -49,38 +49,47 @@ Pulse is not your typical news reader. It was built from the ground up for neuro
 - Node.js 18+ (for frontend development)
 - [SearXNG](https://docs.searxng.org/) instance (default: `http://localhost:8080`)
 
-### From source (recommended)
+## Quick Start
+
+### 🚀 Launch the server
+
+**From source (recommended):**
 ```bash
 git clone https://github.com/Vksh07/Pulse-News-Dashboard.git
 cd Pulse-News-Dashboard
-npm install && npm run build
+npm install
 npm start
 # → http://localhost:18925
 ```
 
-That's it. The CLI (`cli.js`) auto-detects Python 3.10+, installs `feedparser` if needed, and starts the server.
-
-### Docker (coming soon)
+**Or with npx (requires GitHub auth):**
 ```bash
-docker build -t pulse-dashboard .
-docker run -p 18925:18925 pulse-dashboard
-```
-
-### Development
-```bash
-npm install && npm run dev
-# Frontend hot-reload on :18926, proxies /api to :18925
-```
-
-### npm package (GitHub Packages)
-```bash
-# Configure GitHub Packages auth (requires GitHub PAT with read:packages scope)
+# One-time setup in ~/.npmrc:
 echo "@Vksh07:registry=https://npm.pkg.github.com/" >> ~/.npmrc
 echo "//npm.pkg.github.com/:_authToken=YOUR_GITHUB_TOKEN" >> ~/.npmrc
 
-# Then run
+# Then run:
 npx @Vksh07/pulse-news-dashboard
 ```
+
+### Development (hot-reload)
+```bash
+npm run dev
+# Frontend on :18926, proxies /api to backend on :18925
+```
+
+### Production build
+```bash
+npm run build
+npm start
+```
+
+### Requirements
+- **Python 3.10+** — for the news backend
+- **Node.js 18+** — for the frontend build
+- **SearXNG** instance (default: `http://localhost:8080`) — for search aggregation
+
+The CLI auto-detects Python, installs `feedparser` if needed, and serves the built frontend.
 
 ### From source
 ```bash

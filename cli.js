@@ -16,7 +16,7 @@ import path from 'node:path';
 import http from 'node:http';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const ROOT = path.resolve(__dirname, '..');
+const ROOT = __dirname; // Package root (cli.js lives in package root)
 const SERVER_SCRIPT = path.join(ROOT, 'server.py');
 const PORT = process.env.PORT || '18925';
 
@@ -65,17 +65,24 @@ function ensureFeedparser(python) {
 function ensureFrontend() {
   const distIndex = path.join(ROOT, 'dist', 'index.html');
   if (existsSync(distIndex)) {
-    console.log('✓ Frontend already built');
+    console.log('✓ Frontend ready');
     return;
   }
 
-  console.log('→ Building frontend...');
-  try {
-    execSync('npm run build', { cwd: ROOT, stdio: 'inherit', timeout: 120000 });
-    console.log('✓ Frontend built');
-  } catch {
-    console.log('⚠ Frontend build failed — API-only mode. Install Node.js 18+ and run: npm install && npm run build');
+  // Only try to build if we detect we're in a source checkout (has package.json with build script)
+  const pkgPath = path.join(ROOT, 'package.json');
+  if (existsSync(pkgPath)) {
+    try {
+      const pkg = JSON.parse(String(execSync('cat package.json', { cwd: ROOT, encoding: 'utf-8', timeout: 3000 })));
+      if (pkg.scripts && pkg.scripts.build) {
+        console.log('→ Building frontend...');
+        execSync('npm run build', { cwd: ROOT, stdio: 'inherit', timeout: 120000 });
+        console.log('✓ Frontend built');
+        return;
+      }
+    } catch {}
   }
+  console.log('⚠ Frontend not found. Run: cd Pulse-News-Dashboard && npm install && npm run build');
 }
 
 // ── Ensure cache directory ────────────────────────────────────
