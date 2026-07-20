@@ -1,0 +1,14 @@
+*.backup
+*.bak
+*.bak2
+*.bak3
+*.backup2
+*.backup_orig
+*.backup_before_tts_fix
+*.bak_fix
+*.fixed
+*.no_getVoices
+*.testbackup
+*.on-hold
+fix.py
+fix_dashboard.py

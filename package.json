@@ -1,9 +1,13 @@
 {
-  "name": "pulse-news-dashboard",
-  "version": "2.0.0",
-  "description": "ADHD-Savvy News Dashboard — Production Grade EdTech Platform",
+  "name": "@Vksh07/pulse-news-dashboard",
+  "version": "2.0.5",
+  "description": "ADHD-Savvy News Dashboard — one-command news reader with UPSC prep, gamification, and ADHD-friendly modes",
   "type": "module",
+  "bin": {
+    "pulse-news-dashboard": "cli.js"
+  },
   "scripts": {
+    "start": "node cli.js",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
@@ -12,13 +16,7 @@
     "test:coverage": "vitest run --coverage",
     "lint": "eslint src --ext ts,tsx",
     "format": "prettier --write \"src/**/*.{ts,tsx,css,md}\"",
-    "typecheck": "tsc --noEmit",
-    "backend:dev": "python3 server.py",
-    "backend:prod": "python3 server.py || python3 server.py",
-    "docker:build": "docker build -t pulse-dashboard .",
-    "docker:run": "docker run -p 18925:18925 pulse-dashboard",
-    "deploy:staging": "vercel --prod=false",
-    "deploy:prod": "vercel --prod"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.101.0",
@@ -64,6 +62,24 @@
     "vite": "^5.4.5",
     "vitest": "^2.1.1"
   },
+  "files": [
+    "LICENSE",
+    "README.md",
+    "cli.js",
+    "dist/",
+    "eslint.config.js",
+    "package.json",
+    "postcss.config.js",
+    "public/",
+    "server.py",
+    "src/",
+    "static/",
+    "tailwind.config.js",
+    "tests/",
+    "tsconfig.json",
+    "tsconfig.node.json",
+    "vite.config.ts"
+  ],
   "engines": {
     "node": ">=20.0.0"
   },
@@ -77,5 +93,8 @@
     "neurodivergent"
   ],
   "author": "Venkat",
-  "license": "MIT"
+  "license": "MIT",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  }
 }

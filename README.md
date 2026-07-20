@@ -49,35 +49,47 @@ Pulse is not your typical news reader. It was built from the ground up for neuro
 - Node.js 18+ (for frontend development)
 - [SearXNG](https://docs.searxng.org/) instance (default: `http://localhost:8080`)
 
-### One-command Setup
+### One-command (npx)
 ```bash
-bash setup.sh --serve
+npx @Vksh07/pulse-news-dashboard
 # → http://localhost:18925
 ```
 
-This single command creates a Python venv, installs `feedparser`, runs `npm install && npm run build` for the frontend, and starts the server.
+No install required. npx downloads, checks for Python 3.10+, installs `feedparser` if needed, ensures the frontend is built, and starts the server — all in one command.
 
-### Step-by-step
+### Install globally
+```bash
+npm install -g @Vksh07/pulse-news-dashboard
+pulse-news-dashboard
+# → http://localhost:18925
+```
+
+Or just run it:
+```bash
+npx @Vksh07/pulse-news-dashboard
+```
+
+### From source
+```bash
+git clone https://github.com/Vksh07/Pulse-News-Dashboard.git
+cd Pulse-News-Dashboard
+npm start
+# → http://localhost:18925
+```
+
+### Step-by-step (for development)
 
 **Backend only (API without frontend UI):**
 ```bash
 python3 server.py
 # → http://localhost:18925
 ```
-The backend serves the built frontend from `dist/` and provides the JSON API.
 
-**Full stack (with frontend development):**
+**Full stack (with frontend hot-reload):**
 ```bash
-bash setup.sh           # install everything
-npm run dev             # frontend dev server with hot reload
-# → http://localhost:18926 (proxies /api to backend on 18925)
-```
-
-**Production build:**
-```bash
-bash setup.sh           # install everything
-npm run build           # build static frontend
-./start.sh              # or: python3 server.py
+npm install
+npm run build           # build the SPA once
+npm run dev             # frontend dev server on :18926 (proxies /api to backend)
 ```
 
 ---

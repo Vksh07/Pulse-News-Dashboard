@@ -1,0 +1,1 @@
+2026-07-03 13:40:14 | FlexDashboard layout fix: restored topic sections with grid, removed full-width card glitch. Verification: ad-hoc /tmp/hermes-verify-dashboard.sh passed 0 failures. Build: npm run build succeeded. Note: verification is ad-hoc, not formal green test suite.
