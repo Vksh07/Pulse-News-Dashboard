@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#07090e">
+<title>Pulse — Sign In</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{font-family:Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+body{background:#07090e;color:#f0f2f5}
+::selection{background:rgba(234,179,8,.3);color:#fff}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-thumb{background:#1e2533;border-radius:3px}
+@keyframes fadeSlideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes popIn{0%{opacity:0;transform:scale(.92)}100%{opacity:1;transform:scale(1)}}
+@keyframes float{0%{transform:translate(0,0);opacity:.3}100%{transform:translate(30px,-30px);opacity:.8}}
+.anim-fade{animation:fadeSlideUp .6s cubic-bezier(.16,1,.3,1) forwards}
+.anim-pop{animation:popIn .4s cubic-bezier(.16,1,.3,1) forwards}
+.gradient-text{background:linear-gradient(135deg,#eab308,#22c55e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.gradient-text2{background:linear-gradient(135deg,#eab308,#f59e0b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.btn-glow{background:linear-gradient(135deg,#eab308,#f59e0b);color:#000;font-weight:700;cursor:pointer;transition:all .3s;border:none}
+.btn-glow:hover{box-shadow:0 0 24px rgba(234,179,8,.3);transform:scale(1.02)}
+.btn-glass{background:rgba(22,27,38,.6);border:1px solid #1e2533;color:#e2e8f0;font-weight:600;cursor:pointer;transition:all .3s}
+.btn-glass:hover{border-color:rgba(234,179,8,.3);background:rgba(22,27,38,.8)}
+.input{width:100%;padding:12px 16px 12px 44px;border-radius:12px;background:rgba(7,9,14,.8);border:1px solid rgba(30,37,51,.6);color:#fff;outline:none;transition:all .2s;font-size:15px}
+.input:focus{border-color:rgba(234,179,8,.5);box-shadow:0 0 20px rgba(234,179,8,.08)}
+.input::placeholder{color:#475569}
+.glass-card{background:rgba(17,20,29,.7);backdrop-filter:blur(24px) saturate(1.4);border:1px solid rgba(255,255,255,.04);border-radius:16px}
+</style>
+</head>
+<body>
+<div style="position:fixed;inset:0;overflow:hidden;pointer-events:none">
+<canvas id="particles"></canvas>
+<div class="absolute -top-40 -right-40 w-[600px] h-[600px] rounded-full bg-yellow-500/10 blur-[120px] animate-pulse" style="animation-duration:6s"></div>
+<div class="absolute -bottom-40 -left-40 w-[500px] h-[500px] rounded-full bg-green-500/8 blur-[100px] animate-pulse" style="animation-duration:8s;animation-delay:1s"></div>
+<div class="absolute top-1/3 left-1/2 -translate-x-1/2 w-[400px] h-[400px] rounded-full bg-blue-500/5 blur-[80px] animate-pulse" style="animation-duration:10s;animation-delay:2s"></div>
+</div>
+
+<div id="app" class="relative min-h-screen flex items-center justify-center p-4 sm:p-6 lg:p-12">
+
+<!-- Left panel — desktop only -->
+<div class="hidden lg:flex lg:w-1/2 relative flex-col items-center justify-center p-12">
+<div class="text-center max-w-md">
+<div class="inline-flex items-center gap-4 mb-8">
+<span class="text-7xl" style="filter:drop-shadow(0 0 20px rgba(234,179,8,.4))">📰</span>
+<div><span class="text-5xl font-black tracking-tight gradient-text">Pulse</span><p class="text-slate-500 text-sm mt-1 tracking-widest uppercase">ADHD-Savvy News</p></div>
+</div>
+<h2 class="text-3xl font-black text-white mb-4 leading-tight">News That Doesn't<br>Overwhelm You</h2>
+<div class="space-y-4 text-left">
+<div class="flex items-center gap-3 p-3 rounded-xl glass-card"><span class="text-xl">🎯</span><span class="text-slate-300 text-sm font-medium">UPSC syllabus-tagged articles</span></div>
+<div class="flex items-center gap-3 p-3 rounded-xl glass-card"><span class="text-xl">⚡</span><span class="text-slate-300 text-sm font-medium">Energy-adaptive reading modes</span></div>
+<div class="flex items-center gap-3 p-3 rounded-xl glass-card"><span class="text-xl">🧠</span><span class="text-slate-300 text-sm font-medium">Spaced repetition for retention</span></div>
+<div class="flex items-center gap-3 p-3 rounded-xl glass-card"><span class="text-xl">🏆</span><span class="text-slate-300 text-sm font-medium">Gamified progress & streaks</span></div>
+</div>
+<div id="quote" class="mt-10 p-5 rounded-xl glass-card min-h-[80px] flex flex-col justify-center transition-all duration-500">
+<p class="text-sm text-slate-400 italic leading-relaxed">"The best time to plant a tree was 20 years ago. The second best time is now."</p>
+<p class="text-xs text-slate-600 mt-2">— Chinese Proverb</p>
+</div>
+<div class="mt-8 flex justify-center gap-1.5" id="quote-dots"></div>
+</div>
+</div>
+
+<!-- Right panel — form -->
+<div class="w-full lg:w-1/2 flex items-center justify-center relative">
+<div class="w-full max-w-md anim-fade">
+
+<!-- Mobile brand -->
+<div class="lg:hidden text-center mb-8">
+<a href="/" class="inline-flex items-center gap-3"><span class="text-4xl">📰</span><span class="font-black text-3xl tracking-tight gradient-text">Pulse</span></a>
+</div>
+
+<div id="form-container">
+<div class="text-center mb-8">
+<h1 class="text-3xl sm:text-4xl font-black text-white mb-2 tracking-tight" id="form-title">Welcome Back</h1>
+<p class="text-slate-400 text-sm" id="form-subtitle">Sign in to continue your UPSC journey</p>
+</div>
+
+<div id="error-msg" class="mb-6 p-4 rounded-2xl flex items-center gap-3 text-red-400 anim-pop" style="display:none;background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.25)">
+<span>⚠️</span><span class="text-sm font-medium" id="error-text"></span>
+</div>
+
+<div class="glass-card p-6 shadow-2xl hover:border-yellow-500/20 transition-all duration-500" style="border-color:rgba(30,37,51,.8)">
+<form id="auth-form" class="space-y-4">
+<div>
+<label class="block text-sm font-medium text-slate-300 mb-1.5">Email</label>
+<div class="relative">
+<span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500" style="transition:color .2s">✉️</span>
+<input id="email" type="email" required placeholder="you@example.com" autocomplete="email" class="input">
+</div>
+</div>
+<div>
+<label class="block text-sm font-medium text-slate-300 mb-1.5">Password</label>
+<div class="relative">
+<span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500">🔒</span>
+<input id="password" type="password" required placeholder="••••••••" autocomplete="current-password" class="input" style="padding-right:44px">
+<button type="button" id="toggle-pw" class="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white transition-colors" style="background:none;border:none;cursor:pointer">👁️</button>
+</div>
+</div>
+<div id="confirm-group" style="display:none">
+<label class="block text-sm font-medium text-slate-300 mb-1.5">Confirm Password</label>
+<div class="relative">
+<span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500">🔒</span>
+<input id="confirm-pw" type="password" required placeholder="••••••••" autocomplete="new-password" class="input">
+</div>
+</div>
+<button type="submit" id="submit-btn" class="relative w-full py-3.5 rounded-xl font-bold text-base text-black btn-glow overflow-hidden" style="transition:all .3s">
+<span id="submit-text" class="flex items-center justify-center gap-2">⚡ Sign In</span>
+</button>
+</form>
+
+<div class="relative my-6"><div class="absolute inset-0 flex items-center"><div class="w-full border-t" style="border-color:rgba(30,37,51,.5)"></div></div><div class="relative flex justify-center text-sm"><span class="px-4 text-slate-500" style="background:rgba(17,20,29,.7)">or</span></div></div>
+
+<div class="grid grid-cols-2 gap-3">
+<button class="btn-glass py-3 rounded-xl text-sm flex items-center justify-center gap-2" onclick="alert('GitHub login coming soon!')">⌨️ GitHub</button>
+<button class="btn-glass py-3 rounded-xl text-sm flex items-center justify-center gap-2" onclick="alert('Google login coming soon!')">🌐 Google</button>
+</div>
+
+<p class="mt-6 text-center text-slate-400 text-sm">
+<span id="switch-text">Don't have an account?</span>
+<button id="switch-btn" class="ml-1.5 text-yellow-500 hover:text-yellow-400 font-semibold transition-colors" style="background:none;border:none;cursor:pointer">Sign Up</button>
+</p>
+</div>
+
+<!-- Mobile benefits -->
+<div class="mt-8 lg:hidden">
+<p class="text-center text-slate-600 text-xs font-semibold uppercase tracking-widest mb-4">Why Pulse?</p>
+<div class="grid grid-cols-3 gap-2">
+<div class="p-3 rounded-xl text-center" style="background:rgba(17,20,29,.6);border:1px solid rgba(30,37,51,.5)"><span class="text-xl block mb-1">🎯</span><p class="text-xs font-semibold text-white">Free to start</p><p class="text-[10px] text-slate-500">No credit card</p></div>
+<div class="p-3 rounded-xl text-center" style="background:rgba(17,20,29,.6);border:1px solid rgba(30,37,51,.5)"><span class="text-xl block mb-1">🚀</span><p class="text-xs font-semibold text-white">14-day Pro</p><p class="text-[10px] text-slate-500">Full access</p></div>
+<div class="p-3 rounded-xl text-center" style="background:rgba(17,20,29,.6);border:1px solid rgba(30,37,51,.5)"><span class="text-xl block mb-1">🔄</span><p class="text-xs font-semibold text-white">Cancel anytime</p><p class="text-[10px] text-slate-500">No lock-in</p></div>
+</div>
+</div>
+</div>
+
+<!-- Authed overlay -->
+<div id="authed" class="text-center" style="display:none">
+<div class="relative inline-block mb-6">
+<div class="text-7xl" style="animation:bounce 1s infinite">🚀</div>
+<div class="absolute -inset-6 rounded-full blur-3xl animate-pulse" style="background:linear-gradient(135deg,rgba(234,179,8,.3),rgba(34,197,94,.3),rgba(59,130,246,.3));animation-duration:2s"></div>
+</div>
+<h2 class="text-3xl font-black text-white mb-2">Signed In!</h2>
+<p class="text-slate-400">Opening your dashboard...</p>
+<div class="mt-6 flex justify-center gap-1">
+<div class="w-3 h-3 rounded-full bg-yellow-500" style="animation:bounce .6s infinite"></div>
+<div class="w-3 h-3 rounded-full bg-yellow-500" style="animation:bounce .6s infinite;animation-delay:150ms"></div>
+<div class="w-3 h-3 rounded-full bg-yellow-500" style="animation:bounce .6s infinite;animation-delay:300ms"></div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+
+<script>
+// Particles
+(function(){var c=document.getElementById('particles');if(!c)return;var x=c.getContext('2d');if(!x)return;
+var p=[],W,H;function resize(){W=c.width=window.innerWidth;H=c.height=window.innerHeight}
+resize();window.addEventListener('resize',resize);
+for(var i=0;i<50;i++)p.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.5,vy:(Math.random()-.5)*.5,r:1+Math.random()*2,a:.1+Math.random()*.2});
+var colors=['rgba(234,179,8,','rgba(34,197,94,','rgba(59,130,246,'];
+function draw(){x.clearRect(0,0,W,H);for(var i=0;i<p.length;i++){p[i].x+=p[i].vx;p[i].y+=p[i].vy;if(p[i].x<0||p[i].x>W)p[i].vx*=-1;if(p[i].y<0||p[i].y>H)p[i].vy*=-1;x.beginPath();x.arc(p[i].x,p[i].y,p[i].r,0,Math.PI*2);x.fillStyle=colors[i%3]+p[i].a+')';x.fill()}requestAnimationFrame(draw)}
+draw();})();
+
+// Rotating quotes
+var quotes=[
+{text:'"The best time to plant a tree was 20 years ago. The second best time is now."',author:'Chinese Proverb'},
+{text:'"Success is the sum of small efforts repeated day in and day out."',author:'Robert Collier'},
+{text:'"Your focus determines your reality."',author:'Qui-Gon Jinn'},
+{text:'"Small daily improvements over time lead to stunning results."',author:'James Clear'},
+];
+var qi=0;var qdots=document.getElementById('quote-dots');
+quotes.forEach(function(_,i){var d=document.createElement('button');d.className='w-2 h-2 rounded-full transition-all duration-300';d.style.background=i===0?'#eab308':'rgba(30,37,51,.8)';if(i===0)d.style.width='24px';d.onclick=function(){qi=i;updateQuote()};qdots.appendChild(d)});
+function updateQuote(){var q=quotes[qi];document.querySelector('#quote p:first-child').textContent=q.text;document.querySelector('#quote p:last-child').textContent='— '+q.author;Array.from(qdots.children).forEach(function(d,i){d.style.background=i===qi?'#eab308':'rgba(30,37,51,.8)';d.style.width=i===qi?'24px':'8px'})}
+setInterval(function(){qi=(qi+1)%quotes.length;updateQuote()},5000);
+
+// Auth form
+var isLogin=true;
+var form=document.getElementById('auth-form');
+var email=document.getElementById('email');
+var password=document.getElementById('password');
+var confirmPw=document.getElementById('confirm-pw');
+var confirmGroup=document.getElementById('confirm-group');
+var submitText=document.getElementById('submit-text');
+var formTitle=document.getElementById('form-title');
+var formSubtitle=document.getElementById('form-subtitle');
+var switchText=document.getElementById('switch-text');
+var switchBtn=document.getElementById('switch-btn');
+var errorMsg=document.getElementById('error-msg');
+var errorText=document.getElementById('error-text');
+var togglePw=document.getElementById('toggle-pw');
+var formContainer=document.getElementById('form-container');
+var authedDiv=document.getElementById('authed');
+
+function showError(m){errorMsg.style.display='flex';errorText.textContent=m}
+function hideError(){errorMsg.style.display='none'}
+
+togglePw.addEventListener('click',function(){var t=password.type==='password'?'text':'password';password.type=t;document.getElementById('confirm-pw').type=t;togglePw.textContent=t==='password'?'👁️':'👁️‍🗨️'});
+
+switchBtn.addEventListener('click',function(){isLogin=!isLogin;
+confirmGroup.style.display=isLogin?'none':'block';
+submitText.innerHTML=isLogin?'⚡ Sign In':'⚡ Create Account';
+formTitle.textContent=isLogin?'Welcome Back':'Join Pulse';
+formSubtitle.textContent=isLogin?'Sign in to continue your UPSC journey':'Start your ADHD-savvy news experience';
+switchText.textContent=isLogin?"Don't have an account?":'Already have an account?';
+switchBtn.textContent=isLogin?'Sign Up':'Sign In';
+hideError();confirmPw.value='';password.autocomplete=isLogin?'current-password':'new-password'});
+
+form.addEventListener('submit',function(e){e.preventDefault();hideError();
+var btn=document.getElementById('submit-btn');btn.disabled=true;btn.style.opacity='.6';
+var orig=submitText.innerHTML;submitText.innerHTML='⏳ Loading...';
+setTimeout(function(){
+if(!isLogin&&password.value!==confirmPw.value){showError('Passwords do not match');btn.disabled=false;btn.style.opacity='1';submitText.innerHTML=orig;return}
+if(password.value.length<8){showError('Password must be at least 8 characters');btn.disabled=false;btn.style.opacity='1';submitText.innerHTML=orig;return}
+localStorage.setItem('pulse_auth_token','demo-jwt-token');
+localStorage.setItem('pulse_user_email',email.value);
+formContainer.style.display='none';authedDiv.style.display='block';
+setTimeout(function(){window.location.href='/app/'},800)},1000)});
+</script>
+</body>
+</html>

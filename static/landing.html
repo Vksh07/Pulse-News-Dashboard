@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#07090e">
+<meta name="description" content="Pulse - ADHD-Savvy News Dashboard for UPSC Aspirants">
+<title>Pulse — ADHD News Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{font-family:Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+body{background:#07090e;color:#f0f2f5;min-height:100vh}
+.bg-main{background:#07090e}
+.bg-panel{background:#11141d}
+.bg-surface{background:#161b26}
+.text-muted{color:#94a3b8}
+.text-muted2{color:#64748b}
+.border-panel{border-color:#1e2533}
+::selection{background:rgba(234,179,8,.3);color:#fff}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#1e2533;border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:#64748b}
+@keyframes fadeSlideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes popIn{0%{opacity:0;transform:scale(.92)}100%{opacity:1;transform:scale(1)}}
+@keyframes glowPulse{0%,100%{box-shadow:0 0 8px rgba(234,179,8,.15)}50%{box-shadow:0 0 32px rgba(234,179,8,.3)}}
+@keyframes float{0%{transform:translate(0,0);opacity:.3}100%{transform:translate(30px,-30px);opacity:.8}}
+@keyframes ping{0%{transform:scale(1);opacity:.8}100%{transform:scale(2);opacity:0}}
+.anim-fade{animation:fadeSlideUp .6s cubic-bezier(.16,1,.3,1) forwards}
+.anim-pop{animation:popIn .4s cubic-bezier(.16,1,.3,1) forwards}
+.anim-glow{animation:glowPulse 2s ease-in-out infinite}
+.anim-float{animation:float 3s ease-in-out infinite alternate}
+.gradient-text{background:linear-gradient(135deg,#eab308,#22c55e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.btn-glow{background:linear-gradient(135deg,#eab308,#f59e0b);color:#000;font-weight:700;border:none;cursor:pointer;transition:all .3s}
+.btn-glow:hover{box-shadow:0 0 24px rgba(234,179,8,.3);transform:scale(1.02)}
+.btn-ghost{background:rgba(22,27,38,.9);border:1px solid #1e2533;color:#e2e8f0;font-weight:600;cursor:pointer;transition:all .3s}
+.btn-ghost:hover{border-color:rgba(234,179,8,.3);box-shadow:0 0 20px rgba(234,179,8,.08)}
+.card-ghost{background:linear-gradient(145deg,rgba(22,27,38,.9),rgba(17,20,29,.8));border:1px solid #1e2533;border-radius:16px;transition:all .4s ease-out}
+.card-ghost:hover{border-color:#2a3346;box-shadow:0 4px 24px rgba(0,0,0,.3);transform:translateY(-1px)}
+.glass{border:1px solid rgba(255,255,255,.04);border-radius:16px}
+.glass-light{background:rgba(17,20,29,.75);backdrop-filter:blur(20px) saturate(1.4)}
+.glass-strong{background:rgba(17,20,29,.9);backdrop-filter:blur(24px) saturate(1.6)}
+</style>
+</head>
+<body>
+<nav id="nav" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex items-center justify-between h-16 sm:h-20">
+<a href="/" class="flex items-center gap-3 group">
+<span class="text-2xl sm:text-3xl">📰</span>
+<span class="font-black text-xl sm:text-2xl tracking-tight gradient-text">Pulse</span>
+</a>
+<div class="hidden md:flex items-center gap-10">
+<a href="#features" class="text-slate-400 hover:text-white text-sm font-medium transition-all">Features</a>
+<a href="#how-it-works" class="text-slate-400 hover:text-white text-sm font-medium transition-all">How It Works</a>
+<a href="#testimonials" class="text-slate-400 hover:text-white text-sm font-medium transition-all">Testimonials</a>
+<a href="#pricing" class="text-slate-400 hover:text-white text-sm font-medium transition-all">Pricing</a>
+</div>
+<div class="flex items-center gap-4">
+<a href="/login" class="text-slate-400 hover:text-white text-sm font-medium transition-all hidden sm:inline">Sign In</a>
+<a href="/onboarding" class="relative inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-sm text-black btn-glow">Get Started <span>✨</span></a>
+</div>
+</div>
+</div>
+</nav>
+
+<section class="relative min-h-screen flex items-center justify-center pt-24 pb-32 px-4 overflow-hidden">
+<canvas id="particles" class="absolute inset-0 pointer-events-none"></canvas>
+<div class="absolute inset-0 bg-gradient-to-br from-yellow-500/8 via-slate-950 to-green-500/8"></div>
+<div class="absolute inset-0" style="background:radial-gradient(ellipse at center,rgba(234,179,8,0.08),transparent 70%)"></div>
+<div class="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full bg-yellow-500/10 blur-[120px] animate-pulse" style="animation-duration:8s"></div>
+<div class="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] rounded-full bg-green-500/8 blur-[100px] animate-pulse" style="animation-duration:10s;animation-delay:2s"></div>
+
+<div class="relative max-w-5xl mx-auto text-center">
+<div class="inline-flex items-center gap-2 px-5 py-2 rounded-full" style="background:linear-gradient(135deg,rgba(234,179,8,.2),rgba(34,197,94,.2));border:1px solid rgba(234,179,8,.3);color:#eab308;font-size:14px;font-weight:600;margin-bottom:32px;box-shadow:0 0 30px rgba(234,179,8,.1)">
+<span class="w-2 h-2 rounded-full bg-green-500" style="animation:ping 1.5s ease-in-out infinite"></span>
+<span>New: UPSC Lens — Auto-tagging by syllabus</span>
+</div>
+
+<h1 class="text-5xl sm:text-7xl lg:text-8xl font-black tracking-tight text-white mb-6 anim-fade leading-[1.1]" style="animation-delay:100ms">
+News That <span class="gradient-text" style="animation:pulse 4s ease-in-out infinite">Works</span><br>
+<span class="text-4xl sm:text-5xl lg:text-6xl text-slate-400">for <span style="background:linear-gradient(135deg,#22c55e,#3b82f6,#8b5cf6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Your Brain</span></span>
+</h1>
+
+<p class="text-lg sm:text-xl text-slate-300 max-w-3xl mx-auto mb-12 anim-fade leading-relaxed" style="animation-delay:200ms">
+The ADHD-savvy news dashboard for UPSC aspirants. Smart filtering, gamified progress, and focus tools — built for how your brain actually works.
+</p>
+
+<div class="flex flex-col sm:flex-row items-center justify-center gap-4 anim-fade" style="animation-delay:300ms">
+<a href="/onboarding" class="relative inline-flex items-center gap-2 px-10 py-4 rounded-xl font-bold text-lg text-black btn-glow">Start Free <span>→</span></a>
+<a href="#features" class="inline-flex items-center gap-2 px-10 py-4 rounded-xl font-bold text-lg btn-ghost">Explore Features <span>›</span></a>
+</div>
+
+<div class="mt-16 flex flex-wrap items-center justify-center gap-8 text-slate-500 text-sm anim-fade" style="animation-delay:400ms">
+<div class="flex items-center gap-2 px-4 py-2 rounded-full bg-slate-900/60 border border-slate-800/50"><span>✅</span><span>No credit card required</span></div>
+<div class="flex items-center gap-2 px-4 py-2 rounded-full bg-slate-900/60 border border-slate-800/50"><span>✅</span><span>Cancel anytime</span></div>
+<div class="flex items-center gap-2 px-4 py-2 rounded-full bg-slate-900/60 border border-slate-800/50"><span>✅</span><span>Privacy-first</span></div>
+<div class="flex items-center gap-2 px-4 py-2 rounded-full bg-slate-900/60 border border-slate-800/50"><span>✅</span><span>14-day Pro trial</span></div>
+</div>
+</div>
+
+<div class="absolute bottom-0 left-0 right-0" style="background:linear-gradient(to top,rgba(12,15,22,.9),transparent);padding:40px 0">
+<div class="max-w-5xl mx-auto px-4 grid grid-cols-4 gap-4 text-center">
+<div><div class="text-2xl sm:text-4xl font-black gradient-text" id="stat1">0</div><div class="text-slate-400 text-xs sm:text-sm mt-1">Articles Indexed</div></div>
+<div><div class="text-2xl sm:text-4xl font-black gradient-text" id="stat2">0</div><div class="text-slate-400 text-xs sm:text-sm mt-1">UPSC Topics</div></div>
+<div><div class="text-2xl sm:text-4xl font-black gradient-text" id="stat3">0</div><div class="text-slate-400 text-xs sm:text-sm mt-1">CSAT Categories</div></div>
+<div><div class="text-2xl sm:text-4xl font-black gradient-text" id="stat4">0</div><div class="text-slate-400 text-xs sm:text-sm mt-1">ADHD-Friendly</div></div>
+</div>
+</div>
+</section>
+
+<section id="features" class="py-32 px-4 sm:px-6 lg:px-8" style="background:linear-gradient(to bottom,#07090e,rgba(12,15,22,.5),#07090e)">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-16">
+<h2 class="text-4xl sm:text-5xl font-black text-white mb-4">Built for How You <span class="gradient-text">Learn</span></h2>
+<p class="text-lg text-slate-400 max-w-2xl mx-auto">Every feature designed around ADHD challenges and UPSC demands.</p>
+</div>
+<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="features-grid"></div>
+</div>
+</section>
+
+<section id="how-it-works" class="py-32 px-4 sm:px-6 lg:px-8" style="background:linear-gradient(to bottom,#07090e,rgba(12,15,22,.3),#07090e)">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-16">
+<h2 class="text-4xl sm:text-5xl font-black text-white mb-4">Three Steps to <span style="background:linear-gradient(135deg,#3b82f6,#8b5cf6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Smarter News</span></h2>
+<p class="text-lg text-slate-400 max-w-2xl mx-auto">Personalize, read, track — it's that simple.</p>
+</div>
+<div class="grid md:grid-cols-3 gap-8" id="steps-grid"></div>
+</div>
+</section>
+
+<section id="testimonials" class="py-32 px-4 sm:px-6 lg:px-8 relative overflow-hidden" style="background:linear-gradient(to bottom,#07090e,rgba(12,15,22,.4),#07090e)">
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full" style="background:linear-gradient(135deg,rgba(234,179,8,.05),rgba(34,197,94,.05),rgba(59,130,246,.05));filter:blur(100px)"></div>
+<div class="relative max-w-7xl mx-auto">
+<div class="text-center mb-16">
+<h2 class="text-4xl sm:text-5xl font-black text-white mb-4">Trusted by <span style="background:linear-gradient(135deg,#ec4899,#8b5cf6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Aspirants</span></h2>
+<p class="text-lg text-slate-400 max-w-2xl mx-auto">Real results from real UPSC aspirants.</p>
+</div>
+<div class="grid md:grid-cols-3 gap-6" id="testimonials-grid"></div>
+</div>
+</section>
+
+<section id="pricing" class="py-32 px-4 sm:px-6 lg:px-8" style="background:linear-gradient(to bottom,#07090e,rgba(12,15,22,.3),#07090e)">
+<div class="max-w-5xl mx-auto">
+<div class="text-center mb-16">
+<h2 class="text-4xl sm:text-5xl font-black text-white mb-4">Simple <span class="gradient-text">Pricing</span></h2>
+<p class="text-lg text-slate-400">Start free. ₹299/mo for Pro. No lock-in.</p>
+</div>
+<div class="grid md:grid-cols-3 gap-8" id="pricing-grid"></div>
+</div>
+</section>
+
+<section class="relative py-32 px-4 sm:px-6 lg:px-8 overflow-hidden" style="background:linear-gradient(135deg,rgba(234,179,8,.1),rgba(34,197,94,.1),rgba(59,130,246,.1))">
+<div class="absolute inset-0" style="background:radial-gradient(ellipse at center,rgba(234,179,8,.15),transparent 60%)"></div>
+<div class="relative max-w-3xl mx-auto text-center">
+<h2 class="text-4xl sm:text-5xl font-black text-white mb-4">Ready to Study <span class="gradient-text">Smarter</span>?</h2>
+<p class="text-lg text-slate-300 mb-10 max-w-xl mx-auto">Join thousands of UPSC aspirants who've switched to ADHD-friendly news.</p>
+<a href="/onboarding" class="relative inline-flex items-center gap-2 px-12 py-4 rounded-xl font-bold text-lg text-black btn-glow">Start Free Today <span>→</span></a>
+<p class="mt-4 text-slate-500 text-sm flex items-center justify-center gap-4"><span>No credit card</span><span>•</span><span>Cancel anytime</span><span>•</span><span>14-day Pro trial</span></p>
+</div>
+</section>
+
+<footer class="py-16 px-4 sm:px-6 lg:px-8 border-t border-slate-800 bg-slate-950">
+<div class="max-w-7xl mx-auto">
+<div class="grid md:grid-cols-4 gap-8 mb-10">
+<div><a href="/" class="flex items-center gap-2 mb-4"><span class="text-2xl">📰</span><span class="font-black text-xl gradient-text">Pulse</span></a><p class="text-slate-400 text-sm">ADHD-savvy news for UPSC aspirants.</p></div>
+<div><h4 class="font-semibold text-white mb-4">Product</h4><ul class="space-y-2 text-sm text-slate-400"><li><a href="#features" class="hover:text-white transition-all">Features</a></li><li><a href="#pricing" class="hover:text-white transition-all">Pricing</a></li><li><a href="#" class="hover:text-white transition-all">API Docs</a></li><li><a href="#" class="hover:text-white transition-all">Changelog</a></li></ul></div>
+<div><h4 class="font-semibold text-white mb-4">Company</h4><ul class="space-y-2 text-sm text-slate-400"><li><a href="#" class="hover:text-white transition-all">About</a></li><li><a href="#" class="hover:text-white transition-all">Blog</a></li><li><a href="#" class="hover:text-white transition-all">Careers</a></li><li><a href="#" class="hover:text-white transition-all">Contact</a></li></ul></div>
+<div><h4 class="font-semibold text-white mb-4">Legal</h4><ul class="space-y-2 text-sm text-slate-400"><li><a href="#" class="hover:text-white transition-all">Privacy</a></li><li><a href="#" class="hover:text-white transition-all">Terms</a></li><li><a href="#" class="hover:text-white transition-all">Cookie Policy</a></li></ul></div>
+</div>
+<div class="pt-8 border-t border-slate-800 flex flex-col md:flex-row items-center justify-between gap-4">
+<p class="text-slate-500 text-sm">© 2026 Pulse. Built for UPSC aspirants by neurodivergent engineers.</p>
+<div class="flex items-center gap-4">
+<a href="#" class="w-10 h-10 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-500 hover:text-white hover:border-yellow-500/30 transition-all">𝕏</a>
+<a href="#" class="w-10 h-10 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-500 hover:text-white hover:border-yellow-500/30 transition-all">⌘</a>
+<a href="#" class="w-10 h-10 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-500 hover:text-white hover:border-yellow-500/30 transition-all">💬</a>
+</div>
+</div>
+</div>
+</footer>
+
+<script>
+(function(){var c=document.getElementById('particles');if(!c)return;var x=c.getContext('2d');if(!x)return;
+var p=[],W,H;function resize(){W=c.width=window.innerWidth;H=c.height=window.innerHeight}
+resize();window.addEventListener('resize',resize);
+for(var i=0;i<60;i++)p.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.5,vy:(Math.random()-.5)*.5,r:1+Math.random()*2,a:.1+Math.random()*.2});
+var colors=['rgba(234,179,8,','rgba(34,197,94,','rgba(59,130,246,','rgba(139,92,246,'];
+function draw(){x.clearRect(0,0,W,H);for(var i=0;i<p.length;i++){p[i].x+=p[i].vx;p[i].y+=p[i].vy;if(p[i].x<0||p[i].x>W)p[i].vx*=-1;if(p[i].y<0||p[i].y>H)p[i].vy*=-1;x.beginPath();x.arc(p[i].x,p[i].y,p[i].r,0,Math.PI*2);x.fillStyle=colors[i%colors.length]+p[i].a+')';x.fill()}requestAnimationFrame(draw)}
+draw();})();
+
+// Nav scroll
+window.addEventListener('scroll',function(){var n=document.getElementById('nav');n.classList.toggle('bg-slate-950/95',window.scrollY>50);n.classList.toggle('backdrop-blur-xl',window.scrollY>50);n.classList.toggle('border-b',window.scrollY>50);n.classList.toggle('border-slate-800/80',window.scrollY>50)});
+
+// Animated counters
+var counters=[{el:'stat1',target:2},{el:'stat2',target:50},{el:'stat3',target:15},{el:'stat4',target:100}];
+var counted=!1;function animateCounters(){if(counted)return;counted=!0;counters.forEach(function(o){var el=document.getElementById(o.el),n=0,t=o.target,d=1500,s=performance.now();(function tick(now){var p=Math.min((now-s)/d,1),e=1-Math.pow(1-p,3);n=Math.floor(e*t);el.textContent=n+(o.target===2?'M+':o.target===100?'%':'+');if(p<1)requestAnimationFrame(tick)})()})}
+var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){animateCounters();obs.disconnect()}})},{threshold:.5});
+obs.observe(document.querySelector('.bottom-0')||document.body);
+
+// Static content
+document.getElementById('features-grid').innerHTML=[
+{emoji:'🧠',title:'UPSC Lens',desc:'Smart filtering by syllabus topics. Articles tagged with GS papers, auto-sorted by relevance.',color:'#22c55e'},
+{emoji:'⚡',title:'ADHD-First Design',desc:'Focus mode, energy-aware layout, micro-goals, dopamine rotation — built for neurodivergent brains.',color:'#eab308'},
+{emoji:'🎯',title:'CSAT Practice',desc:'Daily quant & reasoning questions with explanations. Spaced repetition for retention.',color:'#3b82f6'},
+{emoji:'🏆',title:'Gamified Progress',desc:'XP, streaks, levels, achievements — dopamine loops that actually help you study.',color:'#8b5cf6'},
+{emoji:'🛡️',title:'Focus Shield',desc:'One-click distraction blocker. Energy-aware scheduling. Hide everything except the current task.',color:'#ec4899'},
+{emoji:'📊',title:'Smart Analytics',desc:'Reading heatmaps, category breakdowns, XP sources, streak consistency.',color:'#f59e0b'},
+].map(function(f){return'<div class="card-ghost p-6 group hover:border-yellow-500/30 transition-all cursor-default">'+
+'<div style="width:56px;height:56px;border-radius:16px;background:rgba(22,27,38,.8);display:flex;align-items:center;justify-content:center;margin-bottom:16px;font-size:28px;transition:transform .3s" class="group-hover:scale-110">'+f.emoji+'</div>'+
+'<h3 class="text-xl font-bold text-white mb-3 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-yellow-500 group-hover:to-green-500 transition-all" style="color:'+f.color+'">'+f.title+'</h3>'+
+'<p class="text-slate-400 leading-relaxed group-hover:text-slate-300 transition-colors">'+f.desc+'</p></div>'
+}).join('');
+
+document.getElementById('steps-grid').innerHTML=[
+{step:1,emoji:'🎯',title:'Personalize',desc:'Pick your UPSC topics, set daily goals, choose your focus modes. Takes 2 minutes.',gradient:'from-yellow-500 to-amber-500'},
+{step:2,emoji:'🧠',title:'Read Smart',desc:'UPSC Lens auto-tags articles. Focus mode removes distractions. Micro-goals keep you moving.',gradient:'from-green-500 to-emerald-500'},
+{step:3,emoji:'📈',title:'Track & Grow',desc:'XP, streaks, analytics, spaced repetition. See progress, build habits, ace the exam.',gradient:'from-blue-500 to-indigo-500'},
+].map(function(s){return'<div class="card-ghost p-8 group hover:scale-[1.02] hover:-translate-y-1 transition-all duration-500 relative">'+
+'<div style="width:64px;height:64px;border-radius:16px;background:linear-gradient(135deg,'+(s.gradient==='from-yellow-500 to-amber-500'?'#eab308,#f59e0b':s.gradient==='from-green-500 to-emerald-500'?'#22c55e,#10b981':'#3b82f6,#6366f1')+');display:flex;align-items:center;justify-content:center;margin-bottom:24px;font-size:28px;box-shadow:0 4px 12px rgba(0,0,0,.3);transition:transform .3s" class="group-hover:scale-110">'+s.emoji+'</div>'+
+'<div style="position:absolute;top:32px;right:32px;width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,'+(s.gradient==='from-yellow-500 to-amber-500'?'#eab308,#f59e0b':s.gradient==='from-green-500 to-emerald-500'?'#22c55e,#10b981':'#3b82f6,#6366f1')+');color:#000;font-weight:900;font-size:18px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,.3)">'+s.step+'</div>'+
+'<h3 class="text-2xl font-bold text-white mb-4">'+s.title+'</h3>'+
+'<p class="text-slate-400 leading-relaxed group-hover:text-slate-300 transition-colors">'+s.desc+'</p></div>'
+}).join('');
+
+document.getElementById('testimonials-grid').innerHTML=[
+{q:'"Finally a news app that doesn\'t make me feel guilty for not reading everything. The UPSC Lens saves me hours every week."',a:'Priya S., UPSC 2024 Aspirant'},
+{q:'"The ADHD features are game-changing. Focus mode + micro-goals = I actually finish my daily reading now."',a:'Arjun M., Working Professional'},
+{q:'"CSAT practice with spaced repetition? Genius. My quant score jumped 15 points in a month."',a:'Kavya R., Repeat Attempt'},
+].map(function(t){return'<div class="card-ghost p-6 group hover:border-yellow-500/20 transition-all">'+
+'<div class="flex gap-1 mb-4">'+"★★★★★".split('').map(function(){return'<span style="color:#eab308;font-size:20px">★</span>'}).join('')+'</div>'+
+'<p class="text-slate-300 text-lg leading-relaxed mb-6 italic">'+t.q+'</p>'+
+'<div class="flex items-center gap-3">'+
+'<div style="width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#eab308,#22c55e);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#000;box-shadow:0 4px 12px rgba(0,0,0,.3)">'+t.a.split(' ').map(function(n){return n[0]}).join('').slice(0,2)+'</div>'+
+'<div><p class="font-semibold text-white">'+t.a+'</p><p class="text-xs text-slate-500 flex items-center gap-1"><span style="color:#22c55e">✓</span> Verified Aspirant</p></div></div></div>'
+}).join('');
+
+document.getElementById('pricing-grid').innerHTML=[
+{name:'Free',price:'₹0',features:['UPSC Lens (basic)','Focus Mode','CSAT Practice (5/day)','Micro-goals','Basic Analytics','7-day history'],cta:'Start Free',popular:!1,link:'/onboarding'},
+{name:'Pro',price:'₹299',features:['Everything in Free','Unlimited CSAT','Spaced Repetition','Full Analytics','Unlimited History','Priority Support','Custom Topics'],cta:'Get Pro',popular:!0,link:'/onboarding'},
+{name:'Team',price:'₹799',features:['Everything in Pro','Up to 5 members','Shared Bookmarks','Team Analytics','Admin Dashboard','Dedicated Support'],cta:'Contact Sales',popular:!1,link:'/login'},
+].map(function(p){return'<div class="card-ghost p-6 flex flex-col transition-all duration-500 hover:scale-[1.02] '+(p.popular?'relative border-yellow-500/50':'')+'"'+(p.popular?' style="box-shadow:0 0 40px rgba(234,179,8,.15);margin-top:-16px"':'')+'>'+
+(p.popular?'<div style="position:absolute;top:-12px;left:50%;transform:translateX(-50%);padding:4px 16px;border-radius:999px;background:linear-gradient(135deg,#eab308,#f59e0b);color:#000;font-size:14px;font-weight:700;box-shadow:0 4px 12px rgba(0,0,0,.3);z-index:10;display:flex;align-items:center;gap:4px"><span>✨</span> Most Popular</div>':'')+
+'<div class="text-center mb-6 pt-2"><h3 class="text-xl font-bold text-white mb-2">'+p.name+'</h3>'+
+'<div class="flex items-baseline justify-center gap-1 mb-1"><span class="text-4xl font-black gradient-text">'+p.price+'</span>'+(p.name!=='Free'?'<span class="text-slate-400 text-sm">/month</span>':'')+'</div>'+
+'<p class="text-slate-500 text-xs">'+p.link==='/onboarding'?'No card to start':'Contact us'+'</p></div>'+
+'<ul class="space-y-3 mb-8 flex-1">'+p.features.map(function(f){return'<li class="flex items-center gap-3 text-slate-300 text-sm"><span style="color:#22c55e">✅</span> '+f+'</li>'}).join('')+'</ul>'+
+'<a href="'+p.link+'" class="relative w-full py-3 rounded-xl font-bold text-sm text-center overflow-hidden transition-all duration-300 '+(p.popular?'btn-glow inline-flex items-center justify-center gap-2':'btn-ghost inline-flex items-center justify-center gap-2')+'">'+p.cta+' <span>→</span></a></div>'
+}).join('');
+})();
+</script>
+</body>
+</html>

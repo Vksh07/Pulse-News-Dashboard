@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pulse — Crisis Mode</title>
+  <style>
+    :root {
+      --bg: #0b0d11;
+      --surface: #111317;
+      --panel: #181b22;
+      --border: #23262f;
+      --text: #e6e8ee;
+      --muted: #8b8fa3;
+      --accent: #7c5cff;
+      --accent2: #22d3a7;
+      --warn: #ffb86c;
+      --danger: #ff5577;
+      --safe: #22d3a7;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.45;
+    }
+    .wrap { max-width: 1120px; margin: 0 auto; padding: 20px; }
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 16px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0));
+      margin-bottom: 16px;
+    }
+    header h1 { font-size: 18px; margin: 0; }
+    header .sub { color: var(--muted); font-size: 12px; }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .pill.danger { color: var(--danger); border-color: #3a1a22; }
+    .pill.safe { color: var(--safe); border-color: #16332b; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 14px;
+    }
+    .card {
+      grid-column: span 12;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px;
+    }
+    @media (min-width: 860px) {
+      .span-6 { grid-column: span 6; }
+      .span-4 { grid-column: span 4; }
+    }
+    .card h2 { font-size: 14px; margin: 0 0 10px; }
+    .muted { color: var(--muted); font-size: 12px; }
+    ul.clean { margin: 0; padding-left: 18px; font-size: 13px; color: #cdd0d8; line-height: 1.55; }
+    ul.clean li { margin: 6px 0; }
+    .btngroup { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+    .checklist { margin: 0; padding: 0; list-style: none; font-size: 13px; }
+    .checklist li { padding: 6px 0; border-bottom: 1px solid #1b1f28; }
+    a { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div>
+        <h1>🚨 Crisis Mode</h1>
+        <div class="sub">Pulse ADHD Dashboard — Venkat Safety Protocol (v0.1)</div>
+      </div>
+      <div style="display:flex; gap:8px; align-items:center; flex-wrap: wrap;">
+        <span class="pill danger">● Auto-trigger: Panic / Crash / IBS flare / Depersonalization</span>
+        <a class="pill" href="/">← Back to Pulse</a>
+      </div>
+    </header>
+
+    <div class="grid">
+      <div class="card span-6">
+        <h2>Immediate Actions</h2>
+        <ul class="clean">
+          <li><strong>Lie down flat.</strong> Release jaw, shoulders, stomach.</li>
+          <li><strong>Sip room-temp water.</strong> Cold triggers IBS.</li>
+          <li><strong>5-4-3-2-1 Grounding</strong> first. Then breathing.</li>
+          <li><strong>Electrolytes only.</strong> No sugar.</li>
+          <li>No phone. No alerts. No blue light.</li>
+          <li>Do NOT search symptoms.</li>
+        </ul>
+      </div>
+      <div class="card span-6">
+        <h2>Grounding</h2>
+        <ul class="clean">
+          <li>5 — see</li>
+          <li>4 — touch</li>
+          <li>3 — hear</li>
+          <li>2 — smell</li>
+          <li>1 — taste</li>
+        </ul>
+        <p class="muted">Still spiraling? Cold splash, ice cube, name 60 blue things, progressive countdown.</p>
+      </div>
+      <div class="card span-6">
+        <h2>Meds Reference</h2>
+        <p class="muted">No dose changes without psych.</p>
+        <ul class="clean">
+          <li>Clonazepam 0.25 — acute spike</li>
+          <li>Vortioxetine 20 — night</li>
+          <li>Carbamazepine 200 — 1-0-1</li>
+          <li>Etizolam 0.25 — evening</li>
+          <li>Ramosetron 5 mcg — SOS for IBS</li>
+        </ul>
+      </div>
+      <div class="card span-6">
+        <h2>Crash Recovery</h2>
+        <ul class="clean">
+          <li>Total rest. Lights dim. Screens off.</li>
+          <li>Electrolytes over 20 min.</li>
+          <li>3L water minimum.</li>
+          <li>Typical recovery: 24–72 hours.</li>
+        </ul>
+      </div>
+      <div class="card span-4">
+        <h2>Anchor</h2>
+        <p style="font-size:18px; font-weight:700; text-align:center; padding: 12px 0; color: var(--safe);">"I have survived 100% of my worst days."</p>
+      </div>
+      <div class="card span-4">
+        <h2>Emergency Contacts</h2>
+        <ul class="clean">
+          <li>iCall (NIMHANS): 1860 266 2345</li>
+          <li>Sumaitri (Delhi): 011 2338 9090</li>
+          <li>AASRA (Mumbai): 98204 66626</li>
+          <li>Local ER — save route before crisis.</li>
+        </ul>
+      </div>
+      <div class="card span-4">
+        <h2>Low-Energy Wins</h2>
+        <ul class="checklist">
+          <li>1 sip of water</li>
+          <li>Open curtain</li>
+          <li>Text Hema “still here”</li>
+          <li>Sit up 60 seconds</li>
+          <li>Whisper anchor phrase</li>
+          <li>Listen to one safe song</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

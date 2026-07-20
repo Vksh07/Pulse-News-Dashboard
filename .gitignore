@@ -1,0 +1,81 @@
+# Node
+node_modules/
+dist/
+.vite/
+*.tsbuildinfo
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+*.egg
+.venv/
+venv/
+
+# Cache & data
+cache/
+logs/
+*.log
+*.tmp
+*.pid
+*.out
+
+# Backups
+.backup/
+*.bak
+*.bak2
+*.bak3
+*.backup
+*.backup2
+*.backup_orig
+*.backup_before_tts_fix
+*.bak_fix
+*.fixed
+*.no_getVoices
+*.testbackup
+*.inline_backup
+*.on-hold
+
+# Scratch / experimental
+scratch/
+pulse-ui/
+planes/
+
+# Env
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test artifacts
+test_scan.py
+test_fetch.js
+test.html
+test.js
+test2.js
+
+# Generated
+status.json
+server.out
+server_new.out
+spa_server.cjs
+spa_server.py
+dashboard.pid
+
+# Static backups in root
+app.js
+app2.js
+adhd-features.js
+dashboard.js
+index.html
