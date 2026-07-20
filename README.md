@@ -49,25 +49,35 @@ Pulse is not your typical news reader. It was built from the ground up for neuro
 - Node.js 18+ (for frontend development)
 - [SearXNG](https://docs.searxng.org/) instance (default: `http://localhost:8080`)
 
-### Backend
+### One-command Setup
+```bash
+bash setup.sh --serve
+# → http://localhost:18925
+```
+
+This single command creates a Python venv, installs `feedparser`, runs `npm install && npm run build` for the frontend, and starts the server.
+
+### Step-by-step
+
+**Backend only (API without frontend UI):**
 ```bash
 python3 server.py
 # → http://localhost:18925
 ```
-
 The backend serves the built frontend from `dist/` and provides the JSON API.
 
-### Frontend Development
+**Full stack (with frontend development):**
 ```bash
-npm install
-npm run dev
+bash setup.sh           # install everything
+npm run dev             # frontend dev server with hot reload
 # → http://localhost:18926 (proxies /api to backend on 18925)
 ```
 
-### Production Build
+**Production build:**
 ```bash
-npm run build
-npm run preview    # or just serve with python3 server.py
+bash setup.sh           # install everything
+npm run build           # build static frontend
+./start.sh              # or: python3 server.py
 ```
 
 ---
