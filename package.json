@@ -1,13 +1,13 @@
 {
   "name": "@Vksh07/pulse-news-dashboard",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "ADHD-Savvy News Dashboard \u2014 one-command news reader with UPSC prep, gamification, and ADHD-friendly modes",
   "type": "module",
   "bin": {
-    "pulse-news-dashboard": "cli.js"
+    "pulse": "cli.js"
   },
   "scripts": {
-    "start": "node cli.js",
+    "start": "node cli.js serve",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",

@@ -52,24 +52,33 @@ Pulse is not your typical news reader. It was built from the ground up for neuro
 ## Quick Start
 
 ### 🚀 Launch the server
+```bash
+npx @Vksh07/pulse serve
+# → http://localhost:18925
+```
 
-**From source (recommended):**
+**From source:**
 ```bash
 git clone https://github.com/Vksh07/Pulse-News-Dashboard.git
 cd Pulse-News-Dashboard
 npm install
-npm start
+npm run build
+npx pulse serve
+# or: node cli.js serve
 # → http://localhost:18925
 ```
 
-**Or with npx (requires GitHub auth):**
+**Globally (after npm login):**
 ```bash
-# One-time setup in ~/.npmrc:
-echo "@Vksh07:registry=https://npm.pkg.github.com/" >> ~/.npmrc
-echo "//npm.pkg.github.com/:_authToken=YOUR_GITHUB_TOKEN" >> ~/.npmrc
+npm install -g @Vksh07/pulse-news-dashboard
+pulse serve
+# → http://localhost:18925
+```
 
-# Then run:
-npx @Vksh07/pulse-news-dashboard
+### Development (hot-reload)
+```bash
+npm run dev
+# Frontend on :18926, proxies /api to backend on :18925
 ```
 
 ### Development (hot-reload)
